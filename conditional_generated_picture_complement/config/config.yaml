@@ -1,0 +1,31 @@
+# 核心配置
+device: "cuda"
+data_dir: "data/image_batches"  # 存放batch1到batch5的目录
+save_dir: "models_image"        # 模型保存目录
+image_size: 32                  # 图像尺寸（H=W）
+condition_size: 10              # 中心观察区尺寸
+model_channels: 128             # 模型基础通道数
+batch_size: 32                  # 批次大小
+num_workers: 2                  # 数据加载线程数
+epochs: 100                     # 训练轮数
+
+
+# 扩散参数
+T: 100                          # 扩散步数
+beta_start: 0.0001              # 初始beta
+beta_end: 0.02                  # 最终beta
+
+
+# 优化器与调度器
+lr: 0.0001                      # 初始学习率
+scheduler_T0: 10                # 余弦退火初始周期
+scheduler_Tmult: 2              # 周期倍增因子
+
+
+# 损失与模型参数（RGB图像为3通道）
+in_channels: 4                  # 输入通道数（3 RGB + 1 mask）
+out_channels: 3                 # 输出通道数（3 RGB）
+
+
+# 额外
+output_dir: "outputs_image"     # 可视化保存目录

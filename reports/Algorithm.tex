@@ -1,0 +1,52 @@
+% filepath: c:\Users\33805\Desktop\team16\code1.tex
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{float} % 新增：支持 [H] 浮动位置
+% ...existing code...
+% --- 定义 \Let 和 \hadamard (逐元素乘积) ---
+\algnewcommand\Let{\State \textbf{let} }
+\newcommand{\hadamard}{\odot}
+% ...existing code...
+
+\begin{document}
+
+\begin{algorithm}[H]
+\caption{ Training (Conditional Inpainting)}
+\begin{algorithmic}[1]
+    \State \textbf{repeat}
+    \State $x_0 \sim q(x_0)$
+    \State \Let $M$ be the observation mask (1=known, 0=unknown)
+    \State $t \sim \text{Uniform}(\{1, \dots, T\})$  % <--- 空行已删除
+    \State $\epsilon \sim \mathcal{N}(0, I)$
+    \State Take gradient descent step on
+    \Statex \quad $\nabla_\theta \left\| \left( \epsilon - \epsilon_\theta( \underbrace{\operatorname{concat}([(\sqrt{\bar{\alpha}_t}x_0 + \sqrt{1 - \bar{\alpha}_t}\epsilon) \hadamard (1-M) + x_0 \hadamard M, M])}_{\text{MODIFIED INPUT}}, t) \right) \underbrace{\hadamard (1-M)}_{\text{MODIFIED LOSS}} \right\|_2^2$
+    \State \textbf{until} converged
+\end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm}[H]
+\caption{ Sampling (Conditional Inpainting)}
+\begin{algorithmic}[1]
+    \State \textbf{Input:} $x_0$ (ground truth image), $M$ (observation mask)  % 替换原来的 \Input
+    \State $x_T \sim \mathcal{N}(0, I)$
+    \State \Let $cond \gets x_0 \hadamard M$
+    \For{$t = T, \dots, 1$}  % 使用 algpseudocode 的 \For
+        \If{$t > 1$}
+            \State $z \sim \mathcal{N}(0, I)$
+        \Else
+            \State $z = 0$
+        \EndIf
+
+        \State $\epsilon_{pred} \gets \epsilon_\theta(\operatorname{concat}([x_t \hadamard (1-M) + cond, M]), t)$
+
+        \State $x_{t-1} \gets \left( \frac{1}{\sqrt{\alpha_t}} \left( x_t - \frac{1-\alpha_t}{\sqrt{1-\bar{\alpha}_t}} \epsilon_{pred} \right) + \sigma_t z \right) \hadamard (1-M) + cond$
+    \EndFor
+    \State \textbf{return} $x_0$
+\end{algorithmic}
+\end{algorithm}
+
+\end{document}

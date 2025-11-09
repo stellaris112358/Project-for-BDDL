@@ -7,21 +7,22 @@
 
 
 ## 项目结构
+
 主要代码文件在conditional_generated_picture_complement文件夹下\
-conditional_generated_picture_complement/
-├── config/
-│ └── config.yaml # 配置文件（模型参数、训练参数等）
-├── models/
-│ └── unet_cond.py # 条件 U-Net 模型定义
-├── scripts/
-│ ├── train_conditional_ddpm.py # 模型训练脚本
-│ ├── gen_image_dataset.py # 生成训练数据集（CIFAR-10 转 npy）
-│ ├── gen_image_testset.py # 生成测试数据集
-│ ├── visualize_image_sample.py # 可视化补全结果
-│ └── gen_test_sets.py # 生成带掩码的测试集和补全后的测试集
-├── data/ # 数据存放目录（自动生成）
-├── models_image/ # 模型保存目录（自动生成）
-└── outputs_image/ # 可视化结果保存目录（自动生成）
+conditional_generated_picture_complement/ \
+├── config/  \
+│ └── config.yaml # 配置文件（模型参数、训练参数等） \
+├── models/  \
+│ └── unet_cond.py # 条件 U-Net 模型定义 \
+├── scripts/ \
+│ ├── train_conditional_ddpm.py # 模型训练脚本 \
+│ ├── gen_image_dataset.py # 生成训练数据集（CIFAR-10 转 npy） \
+│ ├── gen_image_testset.py # 生成测试数据集 \
+│ ├── visualize_image_sample.py # 可视化补全结果 \
+│ └── gen_test_sets.py # 生成带掩码的测试集和补全后的测试集 \
+├── data/ # 数据存放目录（自动生成） \
+├── models_image/ # 模型保存目录（自动生成） \
+└── outputs_image/ # 可视化结果保存目录（自动生成） 
 
 
 
